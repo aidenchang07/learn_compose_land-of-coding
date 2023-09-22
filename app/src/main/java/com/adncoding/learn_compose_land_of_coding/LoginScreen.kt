@@ -59,8 +59,9 @@ fun LoginScreen() {
                 LoginTextField(
                     modifier = Modifier.fillMaxWidth(),
                     label = "Password",
-                    trailing = ""
+                    trailing = "Forgot?"
                 )
+                Spacer(modifier = Modifier.height(20.dp))
                 Button(
                     modifier = Modifier
                         .fillMaxWidth()
