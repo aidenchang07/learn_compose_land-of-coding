@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -27,11 +28,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.adncoding.learn_compose_land_of_coding.ui.theme.Black
 import com.adncoding.learn_compose_land_of_coding.ui.theme.BlueGray
+import com.adncoding.learn_compose_land_of_coding.ui.theme.Roboto
 
 /**
  * Created by AidenChang 2023/08/20
@@ -50,33 +56,94 @@ fun LoginScreen() {
                     .fillMaxSize()
                     .padding(horizontal = 30.dp)
             ) {
-                LoginTextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    label = "Email",
-                    trailing = ""
-                )
-                Spacer(modifier = Modifier.height(15.dp))
-                LoginTextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    label = "Password",
-                    trailing = "Forgot?"
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-                Button(
+                LoginSection()
+                Spacer(modifier = Modifier.height(30.dp))
+                SocialMediaSection()
+                val uiColor = if (isSystemInDarkTheme()) Color.White else Black
+                Box(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(40.dp),
-                    onClick = { /*TODO*/ },
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = if (isSystemInDarkTheme()) BlueGray else Black,
-                        contentColor = Color.White
-                    ),
-                    shape = RoundedCornerShape(size = 4.dp)
+                        .fillMaxHeight(fraction = 0.8f)
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.BottomCenter
                 ) {
-                    Text(text = "Log in", style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Medium))
+                    Text(text = buildAnnotatedString {
+                        withStyle(
+                            style = SpanStyle(
+                                color = Color(0xFF94A3B8),
+                                fontSize = 14.sp,
+                                fontFamily = Roboto,
+                                fontWeight = FontWeight.Normal
+                            )
+                        ) {
+                            append("Don't have account?")
+                        }
+                        withStyle(
+                            style = SpanStyle(
+                                color = uiColor,
+                                fontSize = 14.sp,
+                                fontFamily = Roboto,
+                                fontWeight = FontWeight.Medium
+                            )
+                        ) {
+                            append(" ")
+                            append("Create now")
+                        }
+                    })
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun SocialMediaSection() {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(
+            text = "Or continue with",
+            style = MaterialTheme.typography.labelMedium.copy(color = Color(0xFF64748B))
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            SocialMediaLogIn(icon = R.drawable.google, text = "Google", modifier = Modifier.weight(1f)) {
+
+            }
+            Spacer(modifier = Modifier.width(20.dp))
+            SocialMediaLogIn(icon = R.drawable.facebook, text = "Facebook", modifier = Modifier.weight(1f)) {
+
+            }
+        }
+    }
+}
+
+@Composable
+private fun LoginSection() {
+    LoginTextField(
+        modifier = Modifier.fillMaxWidth(),
+        label = "Email",
+        trailing = ""
+    )
+    Spacer(modifier = Modifier.height(15.dp))
+    LoginTextField(
+        modifier = Modifier.fillMaxWidth(),
+        label = "Password",
+        trailing = "Forgot?"
+    )
+    Spacer(modifier = Modifier.height(20.dp))
+    Button(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(40.dp),
+        onClick = { /*TODO*/ },
+        colors = ButtonDefaults.buttonColors(
+            containerColor = if (isSystemInDarkTheme()) BlueGray else Black,
+            contentColor = Color.White
+        ),
+        shape = RoundedCornerShape(size = 4.dp)
+    ) {
+        Text(text = "Log in", style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Medium))
     }
 }
 
